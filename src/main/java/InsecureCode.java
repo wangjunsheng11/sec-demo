@@ -21,7 +21,6 @@ public class InsecureCode extends HttpServlet {
         out.println("<h3>Your password is: " + password + "</h3>");
 
         try {
-            // SQL注入漏洞
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase", "username", "password");
             Statement statement = connection.createStatement();
             String query = "SELECT * FROM users WHERE username = '" + username + "' AND password = '" + password + "'";
@@ -37,7 +36,7 @@ public class InsecureCode extends HttpServlet {
         }
 
         out.println("<h2>User Input (Potentially Unsafe)</h2>");
-        out.println("<p>" + userInput + "</p>"); // 输出用户输入，可能存在XSS漏洞
+        out.println("<p>" + userInput + "</p>");
         out.println("</body>");
         out.println("</html>");
     }
