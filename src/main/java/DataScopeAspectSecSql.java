@@ -20,7 +20,7 @@ import com.ruoyi.common.utils.StringUtils;
  */
 @Aspect
 @Component
-public class DataScopeAspectSec
+public class DataScopeAspectSecSql
 {
     /**
      * 全部数据权限
