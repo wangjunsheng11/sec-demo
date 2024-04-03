@@ -30,7 +30,7 @@ import com.ruoyi.common.utils.sql.SqlUtil;
  *
  * @author ruoyi
  */
-public class BaseController
+public class BaseControllerSecSql
 {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
