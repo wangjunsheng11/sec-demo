@@ -17,7 +17,7 @@ public class SecureCode extends HttpServlet {
         response.setContentType("text/html");
 
         String username = StringEscapeUtils.escapeHtml4(request.getParameter("username"));
-        String password = StringEscapeUtils.escapeHtml4(request.getParameter("password"));
+        String password = StringEscapeUtils.escapeHtml4(request.getParameter("password").hashCode());
 
         PrintWriter out = response.getWriter();
         out.println("<html>");
