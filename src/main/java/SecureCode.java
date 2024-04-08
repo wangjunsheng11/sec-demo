@@ -3,6 +3,7 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.sql.*;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 public class SecureCode extends HttpServlet {
 
@@ -17,8 +18,8 @@ public class SecureCode extends HttpServlet {
         out.println("<html>");
         out.println("<head><title>Result</title></head>");
         out.println("<body>");
-        out.println("<h2>Welcome " + escapeHtml(username) + "!</h2>");
-        out.println("<h3>Your password is: " + escapeHtml(password) + "</h3>");
+        out.println("<h2>Welcome " + StringEscapeUtils.escapeHtml4(username) + "!</h2>");
+        out.println("<h3>Your password is: " + StringEscapeUtils.escapeHtml4(password) + "</h3>");
 
         // 防止SQL注入
         try {
@@ -35,21 +36,14 @@ public class SecureCode extends HttpServlet {
             }
             connection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            print("数据库连接异常");
         }
 
         out.println("<h2>User Input (Escaped)</h2>");
-        out.println("<p>" + escapeHtml(userInput) + "</p>"); // 输出转义后的用户输入，避免XSS漏洞
+        out.println("<p>" + StringEscapeUtils.escapeHtml4(userInput) + "</p>"); // 输出转义后的用户输入，避免XSS漏洞
         out.println("</body>");
         out.println("</html>");
     }
 
-    // 对用户输入进行HTML转义
-    private String escapeHtml(String input) {
-        return input != null ? input.replaceAll("&", "&amp;")
-                .replaceAll("<", "&lt;")
-                .replaceAll(">", "&gt;")
-                .replaceAll("\"", "&quot;")
-                .replaceAll("'", "&#39;") : "";
-    }
+
 }
