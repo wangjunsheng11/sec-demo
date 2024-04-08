@@ -4,6 +4,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.sql.*;
 import org.apache.commons.lang3.StringEscapeUtils;
+import com.yumc.diana.utils.HashTools;
 
 public class SecureCode extends HttpServlet {
     @Value("${jdbc.url}")
@@ -16,8 +17,12 @@ public class SecureCode extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
 
+        MessageDigest md = MessageDigest.getInstance("MD5");
         String username = StringEscapeUtils.escapeHtml4(request.getParameter("username"));
-        String password = StringEscapeUtils.escapeHtml4(request.getParameter("password").hashCode());
+        String password = StringEscapeUtils.escapeHtml4(request.getParameter("password"));
+        md.update(password.getBytes());
+		byte[] digestByte = md.digest();
+        password = HashTools.bytesToHex(digestByte);
 
         PrintWriter out = response.getWriter();
         out.println("<html>");
