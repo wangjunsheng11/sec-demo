@@ -12,7 +12,6 @@ public class SecureCode extends HttpServlet {
 
         String username = StringEscapeUtils.escapeHtml4(request.getParameter("username"));
         String password = StringEscapeUtils.escapeHtml4(request.getParameter("password"));
-        String userInput = StringEscapeUtils.escapeHtml4(request.getParameter("input"));
 
         PrintWriter out = response.getWriter();
         out.println("<html>");
@@ -21,7 +20,6 @@ public class SecureCode extends HttpServlet {
         out.println("<h2>Welcome " + StringEscapeUtils.escapeHtml4(username) + "!</h2>");
         out.println("<h3>Your password is: " + StringEscapeUtils.escapeHtml4(password) + "</h3>");
 
-        // 防止SQL注入
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase", "username", "password");
             String query = "SELECT * FROM users WHERE username = ? AND password = ?";
@@ -41,7 +39,6 @@ public class SecureCode extends HttpServlet {
         }
 
         out.println("<h2>User Input (Escaped)</h2>");
-        out.println("<p>" + StringEscapeUtils.escapeHtml4(userInput) + "</p>"); // 输出转义后的用户输入，避免XSS漏洞
         out.println("</body>");
         out.println("</html>");
     }
