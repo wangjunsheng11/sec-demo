@@ -10,9 +10,9 @@ public class SecureCode extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
 
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String userInput = request.getParameter("input");
+        String username = StringEscapeUtils.escapeHtml4(request.getParameter("username"));
+        String password = StringEscapeUtils.escapeHtml4(request.getParameter("password"));
+        String userInput = StringEscapeUtils.escapeHtml4(request.getParameter("input"));
 
         PrintWriter out = response.getWriter();
         out.println("<html>");
