@@ -18,7 +18,7 @@ public class SecureCode extends HttpServlet {
         out.println("<html>");
         out.println("<head><title>Result</title></head>");
         out.println("<body>");
-        out.println("<h2>Welcome " + servlet.getUsername() + "!</h2>");
+        out.println("<h2>Welcome " + servlet.getInitParameter("username") + "!</h2>");
         out.println("<h3>Your password is: " + StringEscapeUtils.escapeHtml4(password) + "</h3>");
 
         // 防止SQL注入
