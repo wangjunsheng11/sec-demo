@@ -6,6 +6,12 @@ import java.sql.*;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 public class SecureCode extends HttpServlet {
+    @Value("${jdbc.url}")
+    private String jdbc;
+    @Value("${jdbc.username}")
+    private String jdbcUsername;
+    @Value("${jdbc.password}")
+    private String jdbcPassword;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
@@ -19,9 +25,9 @@ public class SecureCode extends HttpServlet {
         out.println("<body>");
         out.println("<h2>Welcome " + StringEscapeUtils.escapeHtml4(username) + "!</h2>");
         out.println("<h3>Your password is: " + StringEscapeUtils.escapeHtml4(password) + "</h3>");
-
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase", "username", "password");
+            
+            Connection connection = DriverManager.getConnection(jdbc, jdbcUsername, jdbcPassword);
             String query = "SELECT * FROM users WHERE username = ? AND password = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, username);
