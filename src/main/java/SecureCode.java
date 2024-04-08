@@ -36,7 +36,6 @@ public class SecureCode extends HttpServlet {
             }
             connection.close();
         } catch (SQLException e) {
-            print("数据库连接异常: " + (StringUtils.isEmpty(e.getMessage()) ? "error" : e.getMessage()));
             out.println("<p>Login failed!</p>");
             return;
         }
